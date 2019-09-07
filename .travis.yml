@@ -6,8 +6,8 @@ sudo: enabled
 before_script:
   - sudo apt-get install cmake
   - sudo apt-get install libgtest-dev
-  - git clone https://github.com/arun11299/cpp-jwt.git /usr/cpp-jwt
-  - cd /usr/cpp-jwt
+  - git clone https://github.com/arun11299/cpp-jwt.git
+  - cd cpp-jwt
   - sudo mkdir build && cd build
   - sudo cmake ..
   - sudo make install
