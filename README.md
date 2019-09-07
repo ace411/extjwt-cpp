@@ -4,10 +4,8 @@ A simple PHP extension for encoding and decoding JSON Web Tokens (JWTs).
 
 ## Requirements
 
-- C++ 11
 - OpenSSL
 - [gtest](https://github.com/google/googletest) (for jwt-cpp)
-- [PHP-CPP](https://github.com/CopernicaMarketingSoftware/PHP-CPP)
 - [jwt-cpp](https://github.com/Thalhammer/jwt-cpp) package
 - PHP 7 or greater
 
