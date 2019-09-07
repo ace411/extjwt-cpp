@@ -21,11 +21,20 @@ Because ext-func is an extension built on top of PHP-CPP, installation of PHP-CP
 
 Once said tools are successfully installed on your system, type the following in a console to install extjwt-cpp on your machine.
 
-```
-git clone https://github.com/ace411/extjwt-cpp.git
-cd extjwt-cpp
+```sh
+git clone https://github.com/ace411/extjwt-cpp.git extjwt
+cd extjwt
+phpize
+./configure --enable-extjwt CFLAGS="-lssl -lcrypto"
 make && sudo make install
 ```
+
+If you intend to run the tests in the tests directory, run the following command:
+
+```sh
+make test
+```
+
 
 ## Usage
 
