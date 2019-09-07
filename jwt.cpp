@@ -7,7 +7,7 @@ using namespace std;
 typedef initializer_list<string> strList;
 
 template <typename B, typename L, typename S>
-auto signJwt(B obj, L algo, const S &secret) -> string
+auto signJwt(B obj, L algo, const S &secret) -> S
 {
     string token("");
 

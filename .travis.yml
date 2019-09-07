@@ -1,0 +1,16 @@
+language: php
+php:
+  - 7.3
+
+sudo: enabled
+before_script:
+  - git clone https://github.com/arun11299/cpp-jwt.git
+  - cd cpp-jwt
+  - sudo mkdir build && cd build
+  - sudo cmake ..
+  - sudo make install
+
+script:
+  - phpize
+  - ./configure CFLAGS="-lssl -lcrypto"
+  - make test
