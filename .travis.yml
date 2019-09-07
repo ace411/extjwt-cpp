@@ -4,6 +4,12 @@ php:
 
 sudo: enabled
 before_script:
+  - sudo apt-get install cmake
+  - sudo apt-get install libgtest-dev
+  - cd /usr/src/gtest
+  - sudo mkdir build && cd build
+  - sudo cmake ..
+  - sudo make install
   - git clone https://github.com/arun11299/cpp-jwt.git
   - cd cpp-jwt
   - sudo mkdir build && cd build
