@@ -8,13 +8,13 @@
 #include "config.h"
 #endif
 
-extern "C" 
+extern "C"
 {
-    #include "php.h"
-    #include "zend_smart_str.h"
-    #include "zend_exceptions.h"
-    #include "ext/standard/info.h"
-    #include "zend_exceptions.h"
+#include "php.h"
+#include "zend_smart_str.h"
+#include "zend_exceptions.h"
+#include "ext/standard/info.h"
+#include "zend_exceptions.h"
 }
 
 extern zend_module_entry extjwt_module_entry;
