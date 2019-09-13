@@ -1,10 +1,7 @@
-#include <initializer_list>
 #include <jwt-cpp/jwt.h>
 #include "jwt.h"
 
 using namespace std;
-
-typedef initializer_list<string> strList;
 
 template <typename B, typename L, typename S>
 auto signJwt(B obj, L algo, const S &secret) -> S
