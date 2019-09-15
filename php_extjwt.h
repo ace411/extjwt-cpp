@@ -13,6 +13,7 @@ extern "C"
 #include "php.h"
 #include "zend_smart_str.h"
 #include "zend_exceptions.h"
+#include "ext/json/php_json.h"
 #include "ext/standard/info.h"
 #include "zend_exceptions.h"
 }

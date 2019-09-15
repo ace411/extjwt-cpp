@@ -60,9 +60,21 @@ PHP_FUNCTION(jwt_encode)
     }
 
     ZEND_HASH_FOREACH_STR_KEY_VAL(Z_ARRVAL_P(claims), key, claim) {
-        convert_to_string(claim);
-        
-        jwtClaims[ZSTR_VAL(key)] = Z_STRVAL_P(claim);
+        if (Z_TYPE_P(claim) == IS_ARRAY)
+        {
+            smart_str jsonData = {0};
+            php_json_encode(&jsonData, claim, 0);
+            smart_str_0(&jsonData);
+
+            jwtClaims[ZSTR_VAL(key)] = ZSTR_VAL(jsonData.s);
+            smart_str_free(&jsonData);
+        }
+        else
+        {
+            convert_to_string(claim);
+
+            jwtClaims[ZSTR_VAL(key)] = Z_STRVAL_P(claim);
+        }
     } ZEND_HASH_FOREACH_END();
 
     auto retval = jwtEncode<std::string, long, strmap>(std::string(ZSTR_VAL(secret)),
@@ -79,6 +91,8 @@ PHP_FUNCTION(jwt_decode)
     zend_string *token;
     long algo;
 
+    zend_string *key;
+    zval *claim;
     zval *retval;
 
     ZEND_PARSE_PARAMETERS_START(0, 3)
@@ -113,6 +127,17 @@ PHP_FUNCTION(jwt_decode)
                              iter.first.c_str(),
                              iter.second.c_str());
         }
+
+        ZEND_HASH_FOREACH_STR_KEY_VAL(Z_ARRVAL_P(retval), key, claim) {
+            if (php_json_decode_ex(claim,
+                                   Z_STRVAL_P(claim),
+                                   Z_STRLEN_P(claim),
+                                   PHP_JSON_OBJECT_AS_ARRAY,
+                                   512) == FAILURE)
+            {
+                add_assoc_string(retval, ZSTR_VAL(key), Z_STRVAL_P(claim));
+            }
+        } ZEND_HASH_FOREACH_END();
 
         RETURN_ZVAL(retval, 1, 0);
     }
