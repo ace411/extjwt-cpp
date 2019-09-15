@@ -25,7 +25,7 @@ Once said tools are successfully installed on your system, type the following in
 git clone https://github.com/ace411/extjwt-cpp.git extjwt
 cd extjwt
 phpize
-./configure --enable-extjwt CFLAGS="-lssl -lcrypto"
+./configure --enable-extjwt --with-jwtcpp=/path/to/jwtcpp --with-openssl=/path/to/openssl
 make && sudo make install
 ```
 
