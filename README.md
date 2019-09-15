@@ -17,9 +17,7 @@ A simple PHP extension for encoding and decoding JSON Web Tokens (JWTs).
 
 ## Installation
 
-Because ext-func is an extension built on top of PHP-CPP, installation of PHP-CPP is a mandatory prerequisite for using this tool. Also requirements are OpenSSL, and jwt-cpp. 
-
-Once said tools are successfully installed on your system, type the following in a console to install extjwt-cpp on your machine.
+extjwt-cpp requires tools specified in the [precursory text](#requirements). Once said tools are successfully installed on your system, type the following in a console to install extjwt-cpp on your machine.
 
 ```sh
 git clone https://github.com/ace411/extjwt-cpp.git extjwt
@@ -44,9 +42,13 @@ Creating a cryptographically signed token from arbitrary claims.
 
 ```php
 const CLAIMS = [
-    'iss' => 'https://github.com/ace411/extjwt-cpp',
-    'aud' => 'https://github.com/ace411/extjwt-cpp',
-    'user' => 'ace411'
+    'iss'       => 'https://github.com/ace411/extjwt-cpp',
+    'aud'       => 'https://github.com/ace411/extjwt-cpp',
+    'user'      => [
+        'github'    => '@ace411',
+        'twitter'   => '@agiroLoki'
+    ],
+    'cpp_ver'   => 11
 ];
 
 $token = jwt_encode('@loki', JWT_ALGO_HS512, CLAIMS);
