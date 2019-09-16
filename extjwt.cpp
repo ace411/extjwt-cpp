@@ -17,7 +17,7 @@ auto algoIsValid(L algo) -> bool
     case JWT_ALGO_HS512:
         return true;
         break;
-    
+
     default:
         return false;
         break;
@@ -40,7 +40,7 @@ PHP_FUNCTION(jwt_encode)
     Z_PARAM_ARRAY(claims)
     ZEND_PARSE_PARAMETERS_END();
 
-    if (zend_hash_num_elements(HASH_OF(claims)) == 0 || 
+    if (zend_hash_num_elements(HASH_OF(claims)) == 0 ||
         ZSTR_LEN(secret) == 0)
     {
         zend_string_release(secret);
@@ -59,7 +59,8 @@ PHP_FUNCTION(jwt_encode)
         RETURN_NULL();
     }
 
-    ZEND_HASH_FOREACH_STR_KEY_VAL(Z_ARRVAL_P(claims), key, claim) {
+    ZEND_HASH_FOREACH_STR_KEY_VAL(Z_ARRVAL_P(claims), key, claim)
+    {
         if (Z_TYPE_P(claim) == IS_ARRAY)
         {
             smart_str jsonData = {0};
@@ -75,11 +76,12 @@ PHP_FUNCTION(jwt_encode)
 
             jwtClaims[ZSTR_VAL(key)] = Z_STRVAL_P(claim);
         }
-    } ZEND_HASH_FOREACH_END();
+    }
+    ZEND_HASH_FOREACH_END();
 
     auto retval = jwtEncode<std::string, long, strmap>(std::string(ZSTR_VAL(secret)),
-                                                        algo,
-                                                        jwtClaims);
+                                                       algo,
+                                                       jwtClaims);
     RETURN_STRING(retval.c_str());
     zend_string_release(key);
     zend_string_release(secret);
@@ -128,16 +130,26 @@ PHP_FUNCTION(jwt_decode)
                              iter.second.c_str());
         }
 
-        ZEND_HASH_FOREACH_STR_KEY_VAL(Z_ARRVAL_P(retval), key, claim) {
+        ZEND_HASH_FOREACH_STR_KEY_VAL(Z_ARRVAL_P(retval), key, claim)
+        {
             if (php_json_decode_ex(claim,
                                    Z_STRVAL_P(claim),
                                    Z_STRLEN_P(claim),
                                    PHP_JSON_OBJECT_AS_ARRAY,
                                    512) == FAILURE)
             {
-                add_assoc_string(retval, ZSTR_VAL(key), Z_STRVAL_P(claim));
+                Z_STRVAL_P(claim) == std::string("1").c_str() ? add_assoc_bool(retval,
+                                                                               ZSTR_VAL(key),
+                                                                               1)
+                                                              : Z_STRLEN_P(claim) == 0 ? add_assoc_bool(retval,
+                                                                                                        ZSTR_VAL(key),
+                                                                                                        0)
+                                                                                       : add_assoc_string(retval,
+                                                                                                          ZSTR_VAL(key),
+                                                                                                          Z_STRVAL_P(claim));
             }
-        } ZEND_HASH_FOREACH_END();
+        }
+        ZEND_HASH_FOREACH_END();
 
         RETURN_ZVAL(retval, 1, 0);
     }
@@ -164,8 +176,8 @@ PHP_RINIT_FUNCTION(extjwt)
 PHP_MINFO_FUNCTION(extjwt)
 {
     php_info_print_table_start();
-	php_info_print_table_header(2, "extjwt support", "enabled");
-	php_info_print_table_end();
+    php_info_print_table_header(2, "extjwt support", "enabled");
+    php_info_print_table_end();
 }
 
 PHP_MINIT_FUNCTION(extjwt)
@@ -186,7 +198,7 @@ PHP_MINIT_FUNCTION(extjwt)
     REGISTER_LONG_CONSTANT("JWT_ALGO_HS384", JWT_ALGO_HS384, CONST_CS | CONST_PERSISTENT);
     REGISTER_LONG_CONSTANT("JWT_ALGO_HS512", JWT_ALGO_HS512, CONST_CS | CONST_PERSISTENT);
 
-    return SUCCESS;    
+    return SUCCESS;
 }
 
 ZEND_BEGIN_ARG_INFO_EX(arginfo_jwt_encode, 0, 0, 3)
