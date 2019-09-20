@@ -62,6 +62,10 @@ auto jwtDecode(const S &token, L algo, const S &secret) -> strmap
         verifier.allow_algorithm(jwt::algorithm::hs256{secret});
         break;
 
+    case JWT_ALGO_HS384:
+        verifier.allow_algorithm(jwt::algorithm::hs384{secret});
+        break;
+
     case JWT_ALGO_HS512:
         verifier.allow_algorithm(jwt::algorithm::hs512{secret});
         break;
