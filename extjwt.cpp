@@ -5,6 +5,8 @@
 #include "ext/spl/spl_exceptions.h"
 #endif
 
+using namespace std;
+
 zend_class_entry *jwt_exception_ce;
 
 template <typename L>
@@ -79,7 +81,7 @@ PHP_FUNCTION(jwt_encode)
     }
     ZEND_HASH_FOREACH_END();
 
-    auto retval = jwtEncode<std::string, long, strmap>(std::string(ZSTR_VAL(secret)),
+    auto retval = jwtEncode<string, long, strmap>(string(ZSTR_VAL(secret)),
                                                        algo,
                                                        jwtClaims);
     RETURN_STRING(retval.c_str());
@@ -115,9 +117,9 @@ PHP_FUNCTION(jwt_decode)
 
     try
     {
-        auto claims = jwtDecode<std::string, long>(std::string(ZSTR_VAL(token)),
+        auto claims = jwtDecode<string, long>(string(ZSTR_VAL(token)),
                                                    algo,
-                                                   std::string(ZSTR_VAL(secret)));
+                                                   string(ZSTR_VAL(secret)));
 
         array_init(retval);
         zend_string_release(secret);
@@ -138,7 +140,7 @@ PHP_FUNCTION(jwt_decode)
                                    PHP_JSON_OBJECT_AS_ARRAY,
                                    512) == FAILURE)
             {
-                Z_STRVAL_P(claim) == std::string("1").c_str() ? add_assoc_bool(retval,
+                Z_STRVAL_P(claim) == string("1").c_str() ? add_assoc_bool(retval,
                                                                                ZSTR_VAL(key),
                                                                                1)
                                                               : Z_STRLEN_P(claim) == 0 ? add_assoc_bool(retval,
@@ -153,7 +155,7 @@ PHP_FUNCTION(jwt_decode)
 
         RETURN_ZVAL(retval, 1, 0);
     }
-    catch (const std::exception &exp)
+    catch (const exception &exp)
     {
         zend_string_release(secret);
         zend_string_release(token);
@@ -177,6 +179,8 @@ PHP_MINFO_FUNCTION(extjwt)
 {
     php_info_print_table_start();
     php_info_print_table_header(2, "extjwt support", "enabled");
+    php_info_print_table_header(2, "extjwt version", PHP_EXTJWT_EXTVER);
+    php_info_print_table_header(2, "supported algorithms", "HS256, HS384, HS512");
     php_info_print_table_end();
 }
 
