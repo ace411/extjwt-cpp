@@ -38,11 +38,6 @@ auto jwtEncode(const S &secret, L algo, I claims) -> S
         tokenObj.set_payload_claim(iter.first, iter.second);
     }
 
-    if (claims.count("iss"))
-    {
-        tokenObj.set_issuer(claims["iss"]);
-    }
-
     return signJwt<builder, long, string>(tokenObj,
                                                algo,
                                                secret);
