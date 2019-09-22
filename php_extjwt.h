@@ -15,7 +15,6 @@ extern "C"
 #include "zend_exceptions.h"
 #include "ext/json/php_json.h"
 #include "ext/standard/info.h"
-#include "zend_exceptions.h"
 }
 
 extern zend_module_entry extjwt_module_entry;
