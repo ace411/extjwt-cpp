@@ -12,14 +12,11 @@ before_script:
   - sudo cmake ..
   - sudo make
   - sudo cp libgtest* /usr/lib/
-  - sudo git clone https://github.com/arun11299/cpp-jwt.git
-  - cd cpp-jwt
-  - sudo mkdir _build
-  - cd _build
-  - sudo cmake ..
-  - sudo make install
+  - cd /usr/src
+  - sudo mkdir jwtcpp
+  - sudo git clone https://github.com/Thalhammer/jwt-cpp.git jwtcpp
 
 script:
   - phpize
-  - ./configure --enable-extjwt
+  - ./configure --enable-extjwt --with-jwtcpp=/usr/src/jwtcpp/include/jwt-cpp
   - make test
