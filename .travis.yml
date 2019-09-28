@@ -3,8 +3,12 @@ php:
   - 7.3
 
 sudo: enabled
-before_script:
-  - sudo apt-get install cmake
+addons:
+  apt:
+    packages:
+      - cmake
+
+before_install:
   - sudo apt-get install libgtest-dev
   - cd /usr/src/gtest
   - sudo mkdir _build
