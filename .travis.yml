@@ -21,6 +21,7 @@ before_install:
   - sudo git clone https://github.com/Thalhammer/jwt-cpp.git jwtcpp
 
 script:
+  - cd $TRAVIS_BUILD_DIR
   - phpize
   - ./configure --enable-extjwt --with-jwtcpp=/usr/src/jwtcpp/include/jwt-cpp
   - make test
