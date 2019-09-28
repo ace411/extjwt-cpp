@@ -18,8 +18,8 @@ before_install:
   - sudo make
   - sudo cp libgtest* /usr/lib/
   - cd /usr/src
-  - sudo mkdir jwtcpp
-  - sudo git clone https://github.com/Thalhammer/jwt-cpp.git jwtcpp
+  - sudo git clone https://github.com/Thalhammer/jwt-cpp.git
+  - sudo cp -r jwt-cpp/include/jwt-cpp $TRAVIS_BUILD_DIR/jwt-cpp
 
 script:
   - cd $TRAVIS_BUILD_DIR
