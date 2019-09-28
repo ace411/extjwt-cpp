@@ -12,7 +12,7 @@ before_script:
   - sudo cmake ..
   - sudo make
   - sudo cp libgtest* /usr/lib/
-  - git clone https://github.com/arun11299/cpp-jwt.git
+  - sudo git clone https://github.com/arun11299/cpp-jwt.git
   - cd cpp-jwt
   - sudo mkdir _build
   - cd _build
@@ -21,5 +21,5 @@ before_script:
 
 script:
   - phpize
-  - ./configure CFLAGS="-lssl -lcrypto"
+  - ./configure --enable-extjwt
   - make test
