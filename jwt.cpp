@@ -75,7 +75,8 @@ auto jwtEncode(const S &secret, L algo, I claims) -> S
 template <typename S, typename L>
 auto jwtDecode(const S &token, L algo, const S &secret) -> strmap
 {
-    auto decoded = decode(token), verifier = verify();
+    auto decoded = decode(token);
+    auto verifier = verify();
     strmap claims;
 
     switch (algo)
