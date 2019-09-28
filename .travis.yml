@@ -9,6 +9,7 @@ addons:
       - cmake
 
 before_install:
+  - sudo apt-get install libssl-dev
   - sudo apt-get install libgtest-dev
   - cd /usr/src/gtest
   - sudo mkdir _build
