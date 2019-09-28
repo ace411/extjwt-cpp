@@ -57,7 +57,7 @@ if test "$PHP_EXTJWT" != "no"; then
     PHP_ADD_INCLUDE($OPENSSL_DIR/include)
     AC_CHECK_HEADERS([openssl/$OPENSSL_HEADER openssl/crypto.h])
 
-    PHP_CHECK_LIBRARY(ssl, SSL_get_options, 
+    PHP_CHECK_LIBRARY(ssl, SSL_CTX_set_msg_callback, 
     [
         PHP_ADD_INCLUDE($OPENSSL_DIR/include)
         PHP_ADD_LIBRARY_WITH_PATH(ssl, $OPENSSL_DIR/lib, EXTJWT_SHARED_LIBADD)
