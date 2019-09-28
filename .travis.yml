@@ -20,7 +20,7 @@ before_install:
   - cd /usr/src
   - sudo git clone https://github.com/Thalhammer/jwt-cpp.git jwt-cpp
   - cd jwt-cpp
-  - make && sudo make install
+  - sudo make && sudo make install
 
 script:
   - cd $TRAVIS_BUILD_DIR
