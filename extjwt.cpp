@@ -177,6 +177,8 @@ PHP_MINFO_FUNCTION(extjwt)
 {
     php_info_print_table_start();
     php_info_print_table_header(2, "extjwt support", "enabled");
+    php_info_print_table_header(2, "extjwt version", PHP_EXTJWT_EXTVER);
+    php_info_print_table_header(2, "supported algorithms", "HS256, HS384, HS512");
     php_info_print_table_end();
 }
 

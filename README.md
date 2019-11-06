@@ -9,6 +9,8 @@ A simple PHP extension for encoding and decoding JSON Web Tokens (JWTs).
 - [jwt-cpp](https://github.com/Thalhammer/jwt-cpp) package
 - PHP 7 or greater
 
+**Note:** Only POSIX Operating Systems are currently supported.
+
 ## Supported Algorithms
 
 - HS256
