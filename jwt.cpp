@@ -1,10 +1,28 @@
+/**
+ * @file jwt.cpp
+ * @author Lochemem Bruno Michael (lochbm@gmail.com)
+ * @brief 
+ * @version 0.1.0
+ */
 #include <jwt-cpp/jwt.h>
 #include "jwt.h"
 
 using namespace std;
 using namespace jwt;
+
 using timepoint = chrono::time_point<chrono::system_clock>;
 
+/**
+ * @brief 
+ * 
+ * @tparam B
+ * @tparam L
+ * @tparam S  
+ * @param obj   jwt::builder object
+ * @param algo  jwt algorithm
+ * @param S     jwt secret key 
+ * @return string  
+ */
 template <typename B, typename L, typename S>
 auto signJwt(B obj, L algo, const S &secret) -> S
 {
@@ -13,6 +31,7 @@ auto signJwt(B obj, L algo, const S &secret) -> S
     switch (algo)
     {
     case JWT_ALGO_HS256:
+    default:
         token += obj.sign(algorithm::hs256{secret});
         break;
 
@@ -23,14 +42,48 @@ auto signJwt(B obj, L algo, const S &secret) -> S
     case JWT_ALGO_HS512:
         token += obj.sign(algorithm::hs512{secret});
         break;
+
+    case JWT_ALGO_PS256:
+        token += obj.sign(algorithm::ps256("", secret, "", ""));
+        break;
+
+    case JWT_ALGO_PS384:
+        token += obj.sign(algorithm::ps384("", secret, "", ""));
+        break;
+
+    case JWT_ALGO_PS512:
+        token += obj.sign(algorithm::ps512("", secret, "", ""));
+        break;
+
+    case JWT_ALGO_RS256:
+        token += obj.sign(algorithm::rs256("", secret, "", ""));
+        break;
+
+    case JWT_ALGO_RS384:
+        token += obj.sign(algorithm::rs384("", secret, "", ""));
+        break;
+
+    case JWT_ALGO_RS512:
+        token += obj.sign(algorithm::rs512("", secret, "", ""));
+        break;
     }
 
     return token;
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam B 
+ * @tparam S 
+ * @param obj 
+ * @param claims 
+ * @return B 
+ */
 template <typename B, typename S>
 auto addClaims(B obj, S claims) -> B
 {
+    // convert string to C++ time
     auto strToTime = [](const string &timeval) {
         const chrono::system_clock::duration timeT = chrono::seconds{stoi(timeval)};
         const timepoint duration(timeT); 
@@ -61,6 +114,17 @@ auto addClaims(B obj, S claims) -> B
     return obj;
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam S 
+ * @tparam L 
+ * @tparam I 
+ * @param secret 
+ * @param algo 
+ * @param claims 
+ * @return S 
+ */
 template <typename S, typename L, typename I>
 auto jwtEncode(const S &secret, L algo, I claims) -> S
 {
@@ -72,6 +136,16 @@ auto jwtEncode(const S &secret, L algo, I claims) -> S
                                           secret);
 }
 
+/**
+ * @brief 
+ * 
+ * @tparam S 
+ * @tparam L 
+ * @param token 
+ * @param algo 
+ * @param secret 
+ * @return strmap 
+ */
 template <typename S, typename L>
 auto jwtDecode(const S &token, L algo, const S &secret) -> strmap
 {
@@ -91,6 +165,30 @@ auto jwtDecode(const S &token, L algo, const S &secret) -> strmap
 
     case JWT_ALGO_HS512:
         verifier.allow_algorithm(algorithm::hs512{secret});
+        break;
+
+    case JWT_ALGO_RS256:
+        verifier.allow_algorithm(algorithm::rs256(secret, "", "", ""));
+        break;
+
+    case JWT_ALGO_RS384:
+        verifier.allow_algorithm(algorithm::rs384(secret, "", "", ""));
+        break;
+
+    case JWT_ALGO_RS512:
+        verifier.allow_algorithm(algorithm::rs512(secret, "", "", ""));
+        break;
+
+    case JWT_ALGO_PS256:
+        verifier.allow_algorithm(algorithm::ps256(secret, "", "", ""));
+        break;
+
+    case JWT_ALGO_PS384:
+        verifier.allow_algorithm(algorithm::ps384(secret, "", "", ""));
+        break;
+    
+    case JWT_ALGO_PS512:
+        verifier.allow_algorithm(algorithm::ps512(secret, "", "", ""));
         break;
     }
 
