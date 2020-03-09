@@ -1,3 +1,9 @@
+/**
+ * @file php_extjwt.h
+ * @author Lochemem Bruno Michael (lochbm@gmail.com)
+ * @brief 
+ * @version 0.1.0
+ */
 #ifndef PHP_EXTJWT_H
 #define PHP_EXTJWT_H
 
